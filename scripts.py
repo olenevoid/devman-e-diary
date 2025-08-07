@@ -15,8 +15,5 @@ def get_schoolkid(full_name: str) -> Schoolkid | None:
     return schoolkids[0]
 
 
-def get_bad_marks_for_schoolkid(schoolkid: Schoolkid):
-    return Mark.objects.filter(
         schoolkid=schoolkid,
         points__in=BAD_POINTS
-    ).all()
