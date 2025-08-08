@@ -34,14 +34,6 @@ def delete_chastisements(name: str):
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
 
 
-def get_lessons(schoolkid: Schoolkid, subject_name: str) -> list[Lesson]:
-    return Lesson.objects.filter(
-        year_of_study=schoolkid.year_of_study,
-        group_letter=schoolkid.group_letter,
-        subject__title__iregex=subject_name
-    ).all()
-
-
 def get_last_lesson_without_commedation(
         subject_name: str, 
         schoolkid: Schoolkid, 
