@@ -3,10 +3,8 @@ from datacenter.models import (
     Mark, 
     Chastisement, 
     Lesson, 
-
-    Teacher
+    Commendation,
 )
-from django.db.models.query import QuerySet
 
 
 BAD_POINTS = (2, 3)
@@ -62,3 +60,19 @@ def get_last_lesson_without_commedation(
 
     return last_lesson
 
+
+def create_commedation(
+        subject_name: str,
+        schoolkid: Schoolkid,
+        text: str = 'Хорошо!'
+    ):
+
+    lesson = get_last_lesson_without_commedation(subject_name, schoolkid)
+
+    commedation = Commendation()
+    commedation.created = lesson.date
+    commedation.subject = lesson.subject
+    commedation.schoolkid = schoolkid
+    commedation.teacher = lesson.teacher
+    commedation.text = text
+    commedation.save()
