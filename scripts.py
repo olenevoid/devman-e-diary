@@ -1,8 +1,8 @@
-from datacenter.models import Schoolkid, Mark
+from datacenter.models import Schoolkid, Mark, Chastisement
 from django.db.models.query import QuerySet
 
 
-BAD_POINTS = (2,3)
+BAD_POINTS = (2, 3)
 
 
 def get_schoolkid(full_name: str) -> Schoolkid | None:
@@ -21,3 +21,7 @@ def fix_bad_marks(schoolkid: Schoolkid, good_points=5):
         schoolkid=schoolkid,
         points__in=BAD_POINTS
     ).update(points=good_points)
+
+
+def delete_chastisements(schoolkid: Schoolkid):
+    Chastisement.objects.filter(schoolkid=schoolkid).delete()
