@@ -1,4 +1,10 @@
-from datacenter.models import Schoolkid, Mark, Chastisement
+from datacenter.models import (
+    Schoolkid, 
+    Mark, 
+    Chastisement, 
+    Lesson, 
+
+)
 from django.db.models.query import QuerySet
 
 
@@ -25,3 +31,11 @@ def fix_bad_marks(schoolkid: Schoolkid, good_points=5):
 
 def delete_chastisements(schoolkid: Schoolkid):
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
+
+
+def get_lessons(schoolkid: Schoolkid, subject_name: str):
+    return Lesson.objects.filter(
+        year_of_study=schoolkid.year_of_study,
+        group_letter=schoolkid.group_letter,
+        subject__title__iregex=subject_name
+    ).all()
