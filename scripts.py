@@ -13,10 +13,16 @@ BAD_POINTS = (2, 3)
 def get_schoolkid(full_name: str) -> Schoolkid | None:
     schoolkids = Schoolkid.objects.filter(full_name__iregex=full_name).all()
     if len(schoolkids) > 1:
-        print(f'Найдено несколько школьников с именем {full_name}')
+        print(
+            f'Найдено несколько школьников с именем {full_name}\n'
+            'Уточните имя и еще раз запустите скрипт'
+        )
         return None
     if not schoolkids:
-        print(f'Не найдено ни одного школьника с именем {full_name}')
+        print(
+            f'Не найдено ни одного школьника с именем {full_name}\n'
+            'Уточните имя и еще раз запустите скрипт'
+        )
         return None
     return schoolkids[0]
 
