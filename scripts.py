@@ -30,6 +30,7 @@ def fix_bad_marks(name: str, good_points = 5 ):
         schoolkid=schoolkid,
         points__in=BAD_POINTS
     ).update(points=good_points)
+    print(f'Плохие оценки успешно изменены для {schoolkid.full_name}')
 
 
 def delete_chastisements(name: str):
@@ -38,6 +39,7 @@ def delete_chastisements(name: str):
         return
 
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
+    print(f'Замечания успешно удалены для {schoolkid.full_name}')
 
 
 def get_last_lesson_without_commedation(
@@ -79,3 +81,4 @@ def create_commedation(
     commedation.teacher = lesson.teacher
     commedation.text = text
     commedation.save()
+    print(f'Похвала успешно создана для {schoolkid.full_name}')
