@@ -8,6 +8,7 @@ from datacenter.models import (
 
 
 BAD_POINTS = (2, 3)
+GOOD_POINTS = 5
 
 
 def get_schoolkid(full_name: str) -> Schoolkid | None:
@@ -27,7 +28,7 @@ def get_schoolkid(full_name: str) -> Schoolkid | None:
     return schoolkids[0]
 
 
-def fix_bad_marks(name: str, good_points = 5 ):
+def fix_bad_marks(name: str, good_points: int = GOOD_POINTS):
     schoolkid = get_schoolkid(name)
     if not schoolkid:
         return
