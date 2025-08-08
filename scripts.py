@@ -9,6 +9,7 @@ from datacenter.models import (
 
 BAD_POINTS = (2, 3)
 GOOD_POINTS = 5
+DEFAULT_COMMEDATION_TEXT = 'Хорошо!'
 
 
 def get_schoolkid(full_name: str) -> Schoolkid | None:
@@ -73,7 +74,7 @@ def get_last_lesson_without_commedation(
 def create_commedation(
         subject_name: str,
         name: str,
-        text: str = 'Хорошо!'
+        text: str = DEFAULT_COMMEDATION_TEXT
     ):
     schoolkid = get_schoolkid(name)
     if not schoolkid:
