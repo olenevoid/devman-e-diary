@@ -4,6 +4,7 @@ from datacenter.models import (
     Chastisement, 
     Lesson, 
 
+    Teacher
 )
 from django.db.models.query import QuerySet
 
@@ -39,3 +40,13 @@ def get_lessons(schoolkid: Schoolkid, subject_name: str):
         group_letter=schoolkid.group_letter,
         subject__title__iregex=subject_name
     ).all()
+
+def get_teacher(full_name: str) -> Teacher | None:
+    teachers = Teacher.objects.filter(full_name__iregex=full_name).all()
+    if len(teachers) > 1:
+        print(f'Найдено несколько учителей с именем {full_name}')
+        return None
+    if not teachers:
+        print(f'Не найдено ни одного учителя с именем {full_name}')
+        return None
+    return teachers[0]
