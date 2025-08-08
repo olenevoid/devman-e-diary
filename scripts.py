@@ -72,8 +72,8 @@ def get_last_lesson_without_commedation(
 
 
 def create_commedation(
-        subject_name: str,
         name: str,
+        subject_name: str,
         text: str = DEFAULT_COMMEDATION_TEXT
     ):
     schoolkid = get_schoolkid(name)
