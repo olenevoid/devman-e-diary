@@ -21,14 +21,16 @@ def get_schoolkid(full_name: str) -> Schoolkid | None:
     return schoolkids[0]
 
 
-def fix_bad_marks(schoolkid: Schoolkid, good_points=5):
+def fix_bad_marks(name: str, good_points = 5 ):
+    schoolkid = get_schoolkid(name)
     Mark.objects.filter(
         schoolkid=schoolkid,
         points__in=BAD_POINTS
     ).update(points=good_points)
 
 
-def delete_chastisements(schoolkid: Schoolkid):
+def delete_chastisements(name: str):
+    schoolkid = get_schoolkid(name)
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
 
 
@@ -63,10 +65,10 @@ def get_last_lesson_without_commedation(
 
 def create_commedation(
         subject_name: str,
-        schoolkid: Schoolkid,
+        name: str,
         text: str = 'Хорошо!'
     ):
-
+    schoolkid = get_schoolkid(name)
     lesson = get_last_lesson_without_commedation(subject_name, schoolkid)
 
     commedation = Commendation()
