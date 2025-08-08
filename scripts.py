@@ -34,10 +34,31 @@ def delete_chastisements(schoolkid: Schoolkid):
     Chastisement.objects.filter(schoolkid=schoolkid).delete()
 
 
-def get_lessons(schoolkid: Schoolkid, subject_name: str):
+def get_lessons(schoolkid: Schoolkid, subject_name: str) -> list[Lesson]:
     return Lesson.objects.filter(
         year_of_study=schoolkid.year_of_study,
         group_letter=schoolkid.group_letter,
         subject__title__iregex=subject_name
     ).all()
+
+
+def get_last_lesson_without_commedation(
+        subject_name: str, 
+        schoolkid: Schoolkid, 
+    ) -> Lesson:
+
+    commedations = Commendation.objects.filter(
+        schoolkid=schoolkid,
+        subject__title__iregex=subject_name
+    ).all()
+
+    commedation_dates = [commedation.created for commedation in commedations]
+
+    last_lesson = Lesson.objects.filter(
+        year_of_study=schoolkid.year_of_study,
+        group_letter=schoolkid.group_letter,
+        subject__title__iregex=subject_name
+    ).exclude(date__in=commedation_dates).order_by('date').last()
+
+    return last_lesson
 
