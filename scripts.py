@@ -13,20 +13,24 @@ DEFAULT_COMMENDATION_TEXT = 'Хорошо!'
 
 
 def get_schoolkid(full_name: str) -> Schoolkid | None:
-    schoolkids = Schoolkid.objects.filter(full_name__iregex=full_name).all()
-    if len(schoolkids) > 1:
+    try:
+        schoolkid = Schoolkid.objects.get(full_name__iregex=full_name)
+    
+    except Schoolkid.MultipleObjectsReturned:
         print(
             f'Найдено несколько школьников с именем {full_name}\n'
             'Уточните имя и еще раз запустите скрипт'
         )
         return None
-    if not schoolkids:
+    
+    except Schoolkid.DoesNotExist:
         print(
             f'Не найдено ни одного школьника с именем {full_name}\n'
             'Уточните имя и еще раз запустите скрипт'
         )
         return None
-    return schoolkids[0]
+
+    return schoolkid
 
 
 def fix_bad_marks(name: str, good_points: int = GOOD_POINTS):
