@@ -57,7 +57,7 @@ def delete_chastisements(name: str):
 def get_last_lesson_without_commendation(
         subject_name: str, 
         schoolkid: Schoolkid, 
-    ) -> Lesson:
+    ) -> Lesson | None:
 
     commendations = Commendation.objects.filter(
         schoolkid=schoolkid,
@@ -85,6 +85,12 @@ def create_commendation(
         return
 
     lesson = get_last_lesson_without_commendation(subject_name, schoolkid)
+    if not lesson:
+        print(
+            f'Не найден ни один урок без похвал для предмета {subject_name}\n'
+            'Попробуйте еще раз с другим предметом'
+        )
+        return
 
     commendation = Commendation()
     commendation.created = lesson.date
